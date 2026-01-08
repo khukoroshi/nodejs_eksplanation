@@ -1,0 +1,22 @@
+{
+  "name": "npm",
+  "version": "1.0.0",
+  "description": "latihan npm / pnpm",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.2",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "validator": "^13.15.26"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
