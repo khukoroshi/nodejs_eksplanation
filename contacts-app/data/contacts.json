@@ -1,8 +1,11 @@
 [
   {
-    "id": 1767862071440,
+    "nama": "testing",
+    "noHP": "08123456789"
+  },
+  {
     "nama": "Haikal Firansyah",
     "email": "haikal@gmail.com",
-    "noHP": "083965109551"
+    "noHP": "083865109551"
   }
 ]
