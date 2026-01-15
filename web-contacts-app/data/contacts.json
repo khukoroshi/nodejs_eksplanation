@@ -1,1 +1,52 @@
-[]
+[
+  {
+    "nama": "haikal",
+    "nohp": "08123456789",
+    "email": "testing@gmail.com"
+  },
+  {
+    "nama": "testing",
+    "nohp": "08987654321",
+    "email": "testing@gmail.com"
+  },
+  {
+    "nama": "tingtes",
+    "nohp": "088899776655",
+    "email": "tingtes@gmail.com"
+  },
+  {
+    "nama": "gatau",
+    "nohp": "081122334455",
+    "email": "gatau@gmail.com"
+  },
+  {
+    "nama": "tes",
+    "nohp": "08123456786",
+    "email": "tes@gmail.com"
+  },
+  {
+    "nama": "ting",
+    "nohp": "082108079988",
+    "email": "ting@gmail.com"
+  },
+  {
+    "nama": "hafidz",
+    "nohp": "083865109551",
+    "email": "testing@gmail.com"
+  },
+  {
+    "nama": "nandhita",
+    "nohp": "081221937554",
+    "email": "haikalfiransyah28@gmail.com"
+  },
+  {
+    "nama": "anjing",
+    "nohp": "082108076123",
+    "email": "haikalfiransyah28@gmail.com"
+  },
+  {
+    "nama": "tai",
+    "nohp": "08975318642",
+    "email": "haikalfiransyah28@gmail.com"
+  }
+]

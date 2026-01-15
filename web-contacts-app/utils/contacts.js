@@ -20,11 +20,31 @@ function loadContacts() {
   return contacts;
 }
 
-function findContact(nohp) {
+// untuk menampilkan detail contact
+const findContact = (nohp) => {
   const contacts = loadContacts();
   const contact = contacts.find((c) => c.nohp === nohp);
 
   return contact;
+};
+
+// menulis atau menimpa data
+function saveContact(contact) {
+  fs.writeFileSync(filePath, JSON.stringify(contact, null, 2));
 }
 
-export { loadContacts, findContact };
+// menambahkan data contact
+const addContact = (contact) => {
+  const contacts = loadContacts();
+  contacts.push(contact);
+  saveContact(contacts);
+};
+
+const cekDuplikat = (nohp) => {
+  // cek duplikat no HP
+  const contacts = loadContacts();
+  const duplikat = contacts.find((c) => c.nohp === nohp);
+  return duplikat;
+};
+
+export { loadContacts, findContact, addContact, cekDuplikat };

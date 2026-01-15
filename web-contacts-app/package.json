@@ -15,9 +15,13 @@
   "dependencies": {
     "bootstrap": "5.3.8",
     "bootstrap-icons": "^1.13.1",
+    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-ejs-layouts": "^2.5.1",
+    "express-flash-message": "^3.0.2",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.3.1",
     "nodemon": "^3.1.11"
   }
 }

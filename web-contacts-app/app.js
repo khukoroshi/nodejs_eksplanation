@@ -1,9 +1,20 @@
 import express from "express";
 import ejs from "ejs";
 import expressLayouts from "express-ejs-layouts";
+import { body, check, validationResult } from "express-validator";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+// import flash from "connect-flash";
+import flash from "express-flash-message";
+
 import path from "path";
 import { fileURLToPath } from "url";
-import { findContact, loadContacts } from "./utils/contacts.js";
+import {
+  addContact,
+  cekDuplikat,
+  findContact,
+  loadContacts,
+} from "./utils/contacts.js";
 
 const app = express();
 const port = 3000;
@@ -31,6 +42,28 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 // middleware third-party-2
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+
+// konfigurasi flash
+app.use(cookieParser("secret"));
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      // secure: true, // becareful set this option, check here: https://www.npmjs.com/package/express-session#cookiesecure. In local, if you set this to true, you won't receive flash as you are using `http` in local, but http is not secure
+    },
+  })
+);
+app.use(
+  flash({
+    sessionKeyName: "express-flash-message",
+    onAddFlash: (type, message) => {},
+    onConsumeFlash: (type, messages) => {}, // Hapus tipe datanya
+  })
+);
 
 const waifus = [
   {
@@ -68,6 +101,10 @@ app.get("/contact", (req, res) => {
   });
 });
 
+app.get("/contact/tambah", (req, res) => {
+  res.render("tambah-contact", { title: "tambah contact", layout: "layout" });
+});
+
 app.get("/contact/:nohp", (req, res) => {
   res.render("details", {
     title: "details",
@@ -75,6 +112,37 @@ app.get("/contact/:nohp", (req, res) => {
     contact: findContact(req.params.nohp),
   });
 });
+
+app.post(
+  "/contact",
+  [
+    check("email", "Format Email salah").isEmail(),
+    check("nohp", "Format Nomer HP salah").isMobilePhone("id-ID"),
+    body("nohp").custom((value) => {
+      const duplikat = cekDuplikat(value);
+      if (duplikat) {
+        throw new Error("Nomer HP sudah digunakan");
+      }
+      return true;
+    }),
+  ],
+  async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      res.render("tambah-contact", {
+        title: "tambah contact",
+        layout: "layout",
+        errors: result.array(),
+      });
+    } else {
+      addContact(req.body);
+      // kirimkan flash msg
+      await res.flash("info", "data berhasil di tambahkan");
+
+      res.redirect("/contact");
+    }
+  }
+);
 
 // middleware terakhir
 app.use((req, res) => {
