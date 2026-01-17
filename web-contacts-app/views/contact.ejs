@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row">
-    <div class="col-mt-8">
+    <div class="col-mt-6">
       <h2>Daftar Contact</h2>
-      <% const messages = getFlashMessages('info'); console.log(messages); %> <%
-      if (messages.length > 0) { %>
+      <% const messages = getFlashMessages('success'); console.log(messages); %>
+      <% if (messages.length > 0) { %>
       <div class="alert alert-success" role="alert">
         <% messages.forEach(msg => { %>
         <p><%= msg %></p>
@@ -37,12 +37,6 @@
                 class="btn badge rounded-pill text-bg-success btn-success"
               >
                 <i class="bi bi-info-circle"></i> details
-              </a>
-              <a
-                href="/contact?delete=<%= contact.nohp %>"
-                class="btn badge rounded-pill text-bg-danger btn-danger"
-              >
-                <i class="bi bi-trash3"></i> delete
               </a>
             </td>
           </tr>

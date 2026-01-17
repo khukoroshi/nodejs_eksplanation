@@ -14,6 +14,8 @@ import {
   cekDuplikat,
   findContact,
   loadContacts,
+  deleteContact,
+  updateContacts,
 } from "./utils/contacts.js";
 
 const app = express();
@@ -93,7 +95,9 @@ app.get("/about", (req, res) => {
 //   next();
 // });
 
+// untuk menampilkan data contact
 app.get("/contact", (req, res) => {
+  //  res.flash("success", "[------success------]");
   res.render("contact", {
     title: "contact",
     layout: "layout",
@@ -101,16 +105,9 @@ app.get("/contact", (req, res) => {
   });
 });
 
+// untuk menambahkan data contact
 app.get("/contact/tambah", (req, res) => {
   res.render("tambah-contact", { title: "tambah contact", layout: "layout" });
-});
-
-app.get("/contact/:nohp", (req, res) => {
-  res.render("details", {
-    title: "details",
-    layout: "layout",
-    contact: findContact(req.params.nohp),
-  });
 });
 
 app.post(
@@ -126,7 +123,7 @@ app.post(
       return true;
     }),
   ],
-  async (req, res) => {
+  (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       res.render("tambah-contact", {
@@ -137,12 +134,83 @@ app.post(
     } else {
       addContact(req.body);
       // kirimkan flash msg
-      await res.flash("info", "data berhasil di tambahkan");
+      res.flash("success", "data berhasil di tambahkan");
 
       res.redirect("/contact");
     }
   }
 );
+
+// untuk mengubah data contact
+app.get("/contact/edit/:nohp", (req, res) => {
+  res.render("ubah-contact", {
+    title: "ubah contact",
+    layout: "layout",
+    contact: findContact(req.params.nohp),
+  });
+});
+
+app.post(
+  "/contact/update",
+  [
+    check("email", "Format Email salah").isEmail(),
+    check("nohp", "Format Nomer HP salah").isMobilePhone("id-ID"),
+    body("nohp").custom((value, { req }) => {
+      const duplikat = cekDuplikat(value);
+      if (value !== req.body.oldNohp && duplikat) {
+        throw new Error("Nomer HP sudah digunakan");
+      }
+      return true;
+    }),
+  ],
+  (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      // res.send(result);
+      // console.log(req.body);
+      res.render("ubah-contact", {
+        title: "ubah contact",
+        layout: "layout",
+        errors: result.array(),
+        contact: {
+          nama: req.body.nama,
+          email: req.body.email,
+          nohp: req.body.nohp,
+          oldNohp: req.body.oldNohp, // Penting untuk hidden input
+        },
+      });
+    } else {
+      // res.send(req.body);
+      updateContacts(req.body);
+      // kirimkan flash msg
+      res.flash("success", "data berhasil diubah");
+      res.redirect("/contact");
+    }
+  }
+);
+
+// untuk menghapus data contact
+app.get("/contact/delete/:nohp", (req, res) => {
+  const cekNoHP = findContact(req.params.nohp);
+  // console.log(cekNoHP);
+  if (!cekNoHP) {
+    res.status(404).send("<h1>404</h1>");
+  } else {
+    deleteContact(req.params.nohp);
+    res.flash("success", "data berhasil di hapus");
+    res.redirect("/contact");
+  }
+  // res.redirect("/contact")
+});
+
+// untuk menampilkan detail data contact
+app.get("/contact/:nohp", (req, res) => {
+  res.render("details", {
+    title: "details",
+    layout: "layout",
+    contact: findContact(req.params.nohp),
+  });
+});
 
 // middleware terakhir
 app.use((req, res) => {

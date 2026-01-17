@@ -47,4 +47,29 @@ const cekDuplikat = (nohp) => {
   return duplikat;
 };
 
-export { loadContacts, findContact, addContact, cekDuplikat };
+const deleteContact = (nohp) => {
+  const contacts = loadContacts();
+  const newContacts = contacts.filter((contact) => contact.nohp !== nohp);
+  saveContact(newContacts);
+  // console.log(newContacts);
+};
+
+const updateContacts = (contactUpdate) => {
+  const contacts = loadContacts();
+  const newContacts = contacts.filter(
+    (contact) => contact.nohp !== contactUpdate.oldNohp
+  );
+
+  delete contactUpdate.oldNohp;
+  newContacts.push(contactUpdate);
+  saveContact(newContacts);
+};
+
+export {
+  loadContacts,
+  findContact,
+  addContact,
+  cekDuplikat,
+  deleteContact,
+  updateContacts,
+};
