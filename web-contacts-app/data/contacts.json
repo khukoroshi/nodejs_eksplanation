@@ -1,7 +1,17 @@
 [
   {
+    "nama": "tes",
+    "nohp": "08123456786",
+    "email": "tes@gmail.com"
+  },
+  {
+    "nama": "testing",
+    "nohp": "08987654321",
+    "email": "testing@gmail.com"
+  },
+  {
     "nama": "haikal",
     "nohp": "08123456789",
-    "email": "testing@gmail.com"
+    "email": "haikalfiransyah28@gmail.com"
   }
 ]
