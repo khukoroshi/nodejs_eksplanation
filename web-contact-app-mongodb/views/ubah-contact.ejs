@@ -13,7 +13,7 @@
       <% } %>
       <form
         method="post"
-        action="/contact/update"
+        action="/contact?_method=PUT"
         class="row g-3 bg-dark-subtle p-md-3 mt-3"
       >
         <div class="col-md-6">
@@ -51,10 +51,11 @@
           />
         </div>
         <input
-          type="text"
+          type="hidden"
           name="oldNohp"
           value="<%= contact.oldNohp || contact.nohp %>"
         />
+        <input type="hidden" name="_id" value="<%= contact._id %>">
         <div class="col-12">
           <button type="submit" class="btn btn-primary">
             <i class="bi bi-pencil-square"></i> Ubah Data

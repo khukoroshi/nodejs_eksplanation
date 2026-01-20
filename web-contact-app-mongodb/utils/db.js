@@ -5,7 +5,7 @@ mongoose
   .catch((err) => console.error("Gagal koneksi:", err));
 
 // const contact1 = new Contact({
-//   nama: "haikal firansyah",
+//   nama: "hafidz",
 //   nohp: "08123456789",
 //   email: "haikalfiransyah@gmail.com",
 // });
