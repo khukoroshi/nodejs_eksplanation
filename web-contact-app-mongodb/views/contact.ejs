@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-mt-6">
+      <h2>Daftar Contact</h2>
+      <% const messages = getFlashMessages('success'); console.log(messages); %>
+      <% if (messages.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+        <% messages.forEach(msg => { %>
+        <p><%= msg %></p>
+        <% }) %>
+      </div>
+      <% } %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Nomer HP</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (contacts.length === 0) { %>
+          <tr>
+            <td colspan="4">
+              <div class="alert alert-danger" role="alert">Data belum ada</div>
+            </td>
+          </tr>
+          <% } %> <% contacts.forEach((contact, i) => { i+=1 %>
+          <tr>
+            <th scope="row"><%= i++ %></th>
+            <td><%= contact.nama %></td>
+            <td><%= contact.nohp %></td>
+            <td>
+              <a
+                href="/contact/detail/<%= contact.nohp %>"
+                class="btn badge rounded-pill text-bg-success btn-success"
+              >
+                <i class="bi bi-info-circle"></i> details
+              </a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <a href="/contact/tambah" class="btn badge rounded-pill text-bg-primary"
+        ><i class="bi bi-plus-circle"></i> tambah</a
+      >
+    </div>
+  </div>
+</div>
